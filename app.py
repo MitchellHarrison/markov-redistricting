@@ -1,45 +1,97 @@
-import networkx as nx
-import random
 import webbrowser
+import networkx as nx
 from pyvis.network import Network
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output, State
 
+PAGE_TITLE = "Example Graph Network Visualization"
+NET_FILE_NAME = "example.html"
+RED = "#e64360"
+BLUE = "#34a1eb"
+
 app = Dash(__name__)
+
+####################
+##### APP BODY #####
+####################
+app.layout = html.Div([
+    # page header
+    html.H1(PAGE_TITLE),
+
+    # frame for displaying graph
+    html.Iframe(srcDoc = "", width="70%", height="500", id = "graph-display",
+                style = {"display": "inline-block", "width": "75%"}),
+
+    # sliders for controlling 
+    html.Div([
+        html.Label("Number of nodes:"),
+        dcc.Slider(min = 1, max = 20, step = 1, value = 10, id = "node-slider",
+                   marks = {i: str(i) for i in [1, 5, 10, 15, 20]}),
+
+        html.Label("Probability of an edge forming:"),
+        dcc.Slider(min = 0, max = 1, step = .1, value = .2, id = "p-slider",
+                   marks = {i: str(i) for i in [0, .2, .4, .6, .8, 1]}),
+
+        html.Label("Proportion of color 1:"),
+        dcc.Slider(min = 0, max = 1, step = .1, value = .2, id = "p-red-slider",
+                   marks = {i: str(i) for i in [0, .2, .4, .6, .8, 1]}),
+
+
+        # color picker text inputs
+        html.Div([
+            html.Label("Color 1:", style = {"width": "45%"}),
+            html.Div(
+                dcc.Input(id = "color1-input", type = "text", value = RED),
+                style = {"width": "30%"}
+            )]),
+
+        html.Div([
+            html.Label("Color 2:", style = {"width": "45%"}),
+            html.Div(
+                dcc.Input(id = "color2-input", type = "text", value = BLUE),
+                style = {"width": "30%"}
+            )])],
+
+        style = {"display": "inline-block", "width": "20%", 
+                 "vertical-align": "top"}
+    )
+])
+
 
 """
 Create test graph with n nodes with probability p of an edge between them.
 For this test graph, 50% of the nodes are red, and the others blue. This is a
 simple graph to be used only for troubleshooting or proof of concept
 """
-def generate_test_graph(n, p):
+@app.callback(
+    Output("graph-display", "srcDoc"),
+    Input("node-slider", "value"),
+    Input("p-slider", "value"),
+    Input("p-red-slider", "value"),
+    Input("color1-input", "value"),
+    Input("color2-input", "value")
+)
+def generate_test_graph(n, p, p_color1, color1, color2):
     G = nx.erdos_renyi_graph(n, p)
-    color_map = []
-    i = 0
-    for node in G.nodes():
-        if i % 2 == 0:
-            G.nodes[node]["color"] = "blue"
+    num_color1 = int(n * p_color1)
+
+    for i in range(len(G.nodes())):
+        if i < num_color1:
+            G.nodes[i]["color"] = color1
         else:
-            G.nodes[node]["color"] = "red"
-        i += 1
-    return G
+            G.nodes[i]["color"] = color2
 
-# generate a static test graph for visualizations
-test_n = 10
-test_p = 0.3
-G = generate_test_graph(test_n, test_p)
-net = Network(notebook = True)
-net.from_nx(G)
+    net = Network(notebook = True)
+    net.from_nx(G)
+    net.show("temp-net.html")
 
-net.show("example.html")
+    with open("temp-net.html", "r") as file:
+        content = file.read()
 
-app.layout = html.Div([
-    html.H1("# Example Graph Network Visualization"),
-    html.Iframe(srcDoc=open("example.html", 'r').read(),
-                width="100%", height="500"),
-    html.Div(id='slider-output')
-])
+    return content
 
+
+# run app and open it in a new browser tab
 if __name__ == '__main__':
     webbrowser.open_new("http://127.0.0.1:8050/")
     app.run(debug=True)
