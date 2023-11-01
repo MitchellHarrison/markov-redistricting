@@ -1,5 +1,6 @@
 import webbrowser
 import networkx as nx
+import dash_daq as daq
 from pyvis.network import Network
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output, State
@@ -20,7 +21,8 @@ app.layout = html.Div([
 
     # frame for displaying graph
     html.Iframe(srcDoc = "", width="70%", height="500", id = "graph-display",
-                style = {"display": "inline-block", "width": "75%"}),
+                style = {"display": "inline-block", "width": "75%",
+                         "height": "750px"}),
 
     # sliders for controlling 
     html.Div([
@@ -41,14 +43,20 @@ app.layout = html.Div([
         html.Div([
             html.Label("Color 1:", style = {"width": "45%"}),
             html.Div(
-                dcc.Input(id = "color1-input", type = "text", value = RED),
+                daq.ColorPicker(
+                    id = "color1-input", 
+                    value = {"hex": RED}
+                ),
                 style = {"width": "30%"}
             )]),
 
         html.Div([
             html.Label("Color 2:", style = {"width": "45%"}),
             html.Div(
-                dcc.Input(id = "color2-input", type = "text", value = BLUE),
+                daq.ColorPicker(
+                    id = "color2-input", 
+                    value = {"hex": BLUE}
+                ),
                 style = {"width": "30%"}
             )])],
 
@@ -77,11 +85,11 @@ def generate_test_graph(n, p, p_color1, color1, color2):
 
     for i in range(len(G.nodes())):
         if i < num_color1:
-            G.nodes[i]["color"] = color1
+            G.nodes[i]["color"] = color1["hex"]
         else:
-            G.nodes[i]["color"] = color2
+            G.nodes[i]["color"] = color2["hex"]
 
-    net = Network(notebook = True)
+    net = Network(notebook = True, height = "1000px")
     net.from_nx(G)
     net.show("temp-net.html")
 
