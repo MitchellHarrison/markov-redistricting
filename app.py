@@ -6,11 +6,12 @@ from dash import Dash, html, dcc
 from dash.dependencies import Input, Output, State
 
 PAGE_TITLE = "Example Graph Network Visualization"
-NET_FILE_NAME = "example.html"
 RED = "#e64360"
 BLUE = "#34a1eb"
 
-app = Dash(__name__)
+external_stylesheets = ["custom-styles.css"]
+
+app = Dash(__name__, external_stylesheets = external_stylesheets)
 
 ####################
 ##### APP BODY #####
@@ -24,8 +25,9 @@ app.layout = html.Div([
                 style = {"display": "inline-block", "width": "75%",
                          "height": "750px"}),
 
-    # sliders for controlling 
+    # sidebar for graph settings
     html.Div([
+        # sliders
         html.Label("Number of nodes:"),
         dcc.Slider(min = 1, max = 20, step = 1, value = 10, id = "node-slider",
                    marks = {i: str(i) for i in [1, 5, 10, 15, 20]}),
@@ -66,6 +68,9 @@ app.layout = html.Div([
 ])
 
 
+#####################
+##### CALLBACKS #####
+#####################
 """
 Create test graph with n nodes with probability p of an edge between them.
 For this test graph, 50% of the nodes are red, and the others blue. This is a
@@ -89,7 +94,7 @@ def generate_test_graph(n, p, p_color1, color1, color2):
         else:
             G.nodes[i]["color"] = color2["hex"]
 
-    net = Network(notebook = True, height = "1000px")
+    net = Network(notebook = True, height = "1000px", cdn_resources = "in_line")
     net.from_nx(G)
     net.show("temp-net.html")
 
@@ -99,7 +104,8 @@ def generate_test_graph(n, p, p_color1, color1, color2):
     return content
 
 
-# run app and open it in a new browser tab
+###################
+##### RUN APP #####
+###################
 if __name__ == '__main__':
-    webbrowser.open_new("http://127.0.0.1:8050/")
     app.run(debug=True)
