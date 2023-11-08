@@ -16,6 +16,7 @@ app = Dash(__name__, external_stylesheets = external_stylesheets)
 ####################
 ##### APP BODY #####
 ####################
+
 app.layout = html.Div([
     # page header
     html.H1(PAGE_TITLE),
@@ -29,7 +30,7 @@ app.layout = html.Div([
     html.Div([
         # sliders
         html.Label("Number of nodes:"),
-        dcc.Slider(min = 1, max = 20, step = 1, value = 10, id = "node-slider",
+        dcc.Slider(min = 1, max = 20, step = 1, value = 10, id = "node-count-slider",
                    marks = {i: str(i) for i in [1, 5, 10, 15, 20]}),
 
         html.Label("Probability of an edge forming:"),
@@ -71,14 +72,21 @@ app.layout = html.Div([
 #####################
 ##### CALLBACKS #####
 #####################
+
 """
 Create test graph with n nodes with probability p of an edge between them.
 For this test graph, 50% of the nodes are red, and the others blue. This is a
-simple graph to be used only for troubleshooting or proof of concept
+simple graph to be used only for troubleshooting or proof of concept.
+
+n : vertical size of grid (in number of nodes)
+m : horizontal size of grid (in number of nodes)
+p_color1 : probability of a node being color 1
+color1 : string that is a hex value of color 1
+color2 : string that is a hex value of color 2
 """
 @app.callback(
     Output("graph-display", "srcDoc"),
-    Input("node-slider", "value"),
+    Input("node-count-slider", "value"),
     Input("p-slider", "value"),
     Input("p-red-slider", "value"),
     Input("color1-input", "value"),
@@ -107,5 +115,6 @@ def generate_test_graph(n, p, p_color1, color1, color2):
 ###################
 ##### RUN APP #####
 ###################
+
 if __name__ == '__main__':
     app.run(debug=True)
