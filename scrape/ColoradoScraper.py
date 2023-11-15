@@ -46,6 +46,9 @@ def find_colorado_counties(input_path: str, output_path: str):
             # the txt is formatted so that the current county's line has 8 objects
             # in that case, consider this county to be the "target"
             target_county = ""
+            
+            # store all the data in a list
+            data = []
 
             # write each row from the txt file to the csv
             for line in input_file:
@@ -108,8 +111,7 @@ def find_colorado_counties(input_path: str, output_path: str):
                         """
                         if second[2] == "CO" and first[0] != second[0]:
                             neighbor_county = second[0]
-                            data = [target_county, neighbor_county]
-                            csv_writer.writerow(data)
+                            data.append([target_county, neighbor_county])
                             
                             
                     else:
@@ -150,11 +152,14 @@ def find_colorado_counties(input_path: str, output_path: str):
                             continue
                         
                         # if the county names are distinct, add the data
-                        data = [target_county, neighbor_county]
-                        csv_writer.writerow(data)
+                        data.append([target_county, neighbor_county])
                 
                 except Exception as e:
                     print(str(e))
+                    
+            # sort the counties in alphabetical order
+            data.sort()
+            csv_writer.writerows(data)
 
 # main method that calls the web scraper function
 if __name__ == "__main__":

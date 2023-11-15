@@ -83,8 +83,8 @@ Dolores,Montezuma
 Dolores,San Juan
 Dolores,San Miguel
 Douglas,Arapahoe
-Douglas,Elbert
 Douglas,El Paso
+Douglas,Elbert
 Douglas,Jefferson
 Douglas,Teller
 Eagle,Garfield
@@ -93,10 +93,6 @@ Eagle,Lake
 Eagle,Pitkin
 Eagle,Routt
 Eagle,Summit
-Elbert,Arapahoe
-Elbert,Douglas
-Elbert,El Paso
-Elbert,Lincoln
 El Paso,Crowley
 El Paso,Douglas
 El Paso,Elbert
@@ -104,6 +100,10 @@ El Paso,Fremont
 El Paso,Lincoln
 El Paso,Pueblo
 El Paso,Teller
+Elbert,Arapahoe
+Elbert,Douglas
+Elbert,El Paso
+Elbert,Lincoln
 Fremont,Chaffee
 Fremont,Custer
 Fremont,El Paso
@@ -172,16 +172,16 @@ Kit Carson,Cheyenne
 Kit Carson,Lincoln
 Kit Carson,Washington
 Kit Carson,Yuma
-Lake,Chaffee
-Lake,Eagle
-Lake,Park
-Lake,Pitkin
-Lake,Summit
 La Plata,Archuleta
 La Plata,Dolores
 La Plata,Hinsdale
 La Plata,Montezuma
 La Plata,San Juan
+Lake,Chaffee
+Lake,Eagle
+Lake,Park
+Lake,Pitkin
+Lake,Summit
 Larimer,Boulder
 Larimer,Grand
 Larimer,Jackson
@@ -195,8 +195,8 @@ Las Animas,Pueblo
 Lincoln,Arapahoe
 Lincoln,Cheyenne
 Lincoln,Crowley
-Lincoln,Elbert
 Lincoln,El Paso
+Lincoln,Elbert
 Lincoln,Kiowa
 Lincoln,Kit Carson
 Lincoln,Pueblo

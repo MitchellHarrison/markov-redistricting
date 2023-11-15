@@ -1,4 +1,4 @@
-County,Neighbor
+County,PVI
 Adams,7
 Alamosa,-3
 Arapahoe,10
@@ -19,8 +19,8 @@ Denver,30
 Dolores,-25
 Douglas,-4
 Eagle,13
-Elbert,-24
 El Paso,-5
+Elbert,-24
 Fremont,-19
 Garfield,0
 Gilpin,3
@@ -32,8 +32,8 @@ Jackson,-26
 Jefferson,7
 Kiowa,-37
 Kit Carson,-31
-Lake,8
 La Plata,7
+Lake,8
 Larimer,5
 Las Animas,-4
 Lincoln,-29
