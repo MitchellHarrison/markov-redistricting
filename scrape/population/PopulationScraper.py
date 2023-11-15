@@ -53,5 +53,5 @@ def find_populations(input_path: str, output_path: str):
 # main method that calls the web scraper function
 if __name__ == "__main__":
     input_path = "scrape/population/CO-Population-Estimates-2022.csv"
-    output_path = "scrape/population.csv"
+    output_path = "scrape/merge/population.csv"
     find_populations(input_path, output_path)

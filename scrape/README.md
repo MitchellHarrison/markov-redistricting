@@ -28,3 +28,19 @@ Python file used to clean county_adjacency.txt into county.csv. Ran on Python 3.
 ### ColoradoGraph.ipynb
 
 Jupyter notebook that demonstrates how to extract node and edge information from county.csv to be used for NetworkX graphs.
+
+### data_by_county.csv
+
+CSV file compiling various statistics from partisan lean, population, and registered voters.
+
+Data Dictionary:
+
+- County: County name (in Colorado, sorted in alphabetical order)
+- PVI: Partisan Voting Index
+  - Represents whether a county favors the Democratic or Republican presidential candidate more
+  - Positive values indicate that the county favors the Democratic candidate
+  - Negative vaues indicate that the county favors the Republican candidate
+  - Zero represents a neutral county
+- Population: County population based on 2022 estimates
+- #Democrats: Number of Democrats in the county as of 2023 estimates
+- #Republicans: Number of Republicans in the county as of 2023 estimates
