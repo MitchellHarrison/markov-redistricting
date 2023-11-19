@@ -11,7 +11,7 @@ Merge three separate datasets together based on county name.
 df1 = pd.read_csv("scrape/merge/partisan_lean.csv")
 df2 = pd.read_csv("scrape/merge/population.csv")
 df3 = pd.read_csv("scrape/merge/registered.csv")
-df4 = pd.read_csv("scrape/merge/registered.csv")
+df4 = pd.read_csv("scrape/merge/ethnicity.csv")
 
 # merge by county name
 df12 = pd.merge(df1, df2, on="County")
