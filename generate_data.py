@@ -220,8 +220,11 @@ def get_colorado_graph(edge_path = "county.csv", node_path = "data_by_county.csv
     # set the attributes for each node
     attrs = {}
     for i in range(n):
-        attrs[i] = {"name": county_nodes[i], "population": populations[i], "PVI": partisan_leans[i]}
+        attrs[i] = {"name": county_nodes[i], "population": populations[i], 
+                "PVI": partisan_leans[i]}
     nx.set_node_attributes(graph, attrs)
+
+    graph.add_edges_from(edges)
     
     """
     STEP 7:
