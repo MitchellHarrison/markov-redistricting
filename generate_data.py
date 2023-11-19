@@ -149,14 +149,14 @@ OUTPUT: networkX undirected graph containing all nodes and edges
             - PVI
 
 """
-def get_colorado_graph():
+def get_colorado_graph(edge_path = "county.csv", node_path = "data_by_county.csv"):
     
     """
     STEP 1:
     Extract ALL nodes from the CSV file.
     Store the list of nodes in the variable county_nodes
     """
-    input_path = "county.csv"
+    input_path = edge_path
     county_nodes = find_nodes(input_path)
 
     """
@@ -180,7 +180,6 @@ def get_colorado_graph():
     Extract an adjacency list from the CSV.
     This way, we know what nodes connect to one another.
     """
-    input_path = "county.csv"
     adj_list = find_edges(input_path)
 
 
@@ -205,7 +204,7 @@ def get_colorado_graph():
     Extract the population and partisan leans (i.e., PVI) from the graph.
     They will stored in lists, and each county has a population and PVI value.
     """
-    input_path = "data_by_county.csv"
+    input_path = node_path
     populations, partisan_leans = find_population_and_leans(input_path, nums)
     
     """
