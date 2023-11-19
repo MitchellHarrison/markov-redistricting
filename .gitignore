@@ -1,2 +1,6 @@
 lib/
 *.html
+*.ipynb_checkpoints/
+mitch.py
+*virtual_documents/
+*__pycache__/*
