@@ -2,6 +2,7 @@ import dash
 import json
 import networkx as nx
 import plotly.graph_objs as go
+import plotly.express as px
 import numpy as np
 from mcmc_driver import *
 from generate_data import get_colorado_graph
@@ -36,10 +37,23 @@ G = get_colorado_graph()
 # set initial positions of nodes, which remain static
 pos = nx.spring_layout(G)
 
+populations = []
+for i in G.nodes():
+    populations.append(G.nodes()[i]["population"])
+
+dummy_hist = px.histogram(x = populations, nbins = 10, title = "Population")
+
 # Create a layout with a plotly subplot
 app.layout = html.Div([
     html.H1(PAGE_TITLE),
-    dcc.Graph(id = 'graph-animation'),
+    html.Div(
+        dcc.Graph(id = 'graph-animation'),
+        style = {"width": "60%", "display": "inline-block"}
+    ),
+    html.Div(
+        dcc.Graph(id = "demo-hist", figure = dummy_hist),
+        style = {"width": "30%", "display": "inline-block"}
+    ),
     dcc.Interval(
         id = 'interval-component',
         interval = ITERATION_INTERVAL_MS,
