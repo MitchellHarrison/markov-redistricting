@@ -15,7 +15,7 @@ n = len(graph.nodes)
 graph_nodes = graph.nodes
 
 # divide the colorado into subgraphs representing districts
-def divide_into_subgraphs(graph, n) -> list:
+def divide_into_subgraphs(graph, n = 5) -> list:
     # Ensure n is a positive integer less than or equal to the number of nodes 
     if not isinstance(n, int) or n <= 0 or n > len(graph.nodes):
         error = """

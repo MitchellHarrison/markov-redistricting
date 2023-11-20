@@ -201,7 +201,7 @@ def get_colorado_graph(edge_path = "county.csv", node_path = "data_by_county.csv
             
     """
     STEP 5:
-    Extract the population and partisan leans (i.e., PVI) from the graph.
+    Extract the population and partisan leans and from the graph.
     They will stored in lists, and each county has a population and PVI value.
     """
     input_path = node_path
@@ -220,8 +220,11 @@ def get_colorado_graph(edge_path = "county.csv", node_path = "data_by_county.csv
     # set the attributes for each node
     attrs = {}
     for i in range(n):
-        attrs[i] = {"name": county_nodes[i], "population": populations[i], 
-                "PVI": partisan_leans[i]}
+        attrs[i] = dict(
+            name = county_nodes[i],
+            population = populations[i],
+            PVI = partisan_leans[i]
+        )
     nx.set_node_attributes(graph, attrs)
 
     graph.add_edges_from(edges)
