@@ -17,11 +17,18 @@ PAGE_TITLE = "Working Project Site, CS 333"
 ITERATION_INTERVAL_MS = 1000
 
 # static functin for format text that appears when hovering over a node
-def format_hover_text(node):
+def format_hover_text(node) -> str:
     name = node["name"]
     pop = node["population"]
     output = f"{name} County<br>Population: {pop}"
     return output
+
+# get a list of all node colors for displaying on the graph
+def get_node_colors(G) -> list:
+    # colors = [G.nodes()[n]["color"] for n in G.nodes()]
+    colors = [np.random.choice(["red", "green", "blue"], p = (0.3, 0.3, 0.4)) for
+              _ in G.nodes()]
+    return colors
 
 # Create a sample NetworkX graph
 G = get_colorado_graph()
@@ -56,7 +63,10 @@ def update_graph(n):
         text = [format_hover_text(G.nodes()[i]) for i in G.nodes()],
         mode = 'markers',
         hoverinfo = 'text',
-        marker = {"size": 15},
+        marker = dict(
+            size = 15,
+            color = get_node_colors(G)
+        ),
         hoverlabel = dict(font = {"color": "white"})
     )
 
