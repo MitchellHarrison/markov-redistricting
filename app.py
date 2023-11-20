@@ -50,7 +50,7 @@ def update_graph(n):
             for i in G.nodes()],
         mode = 'markers',
         hoverinfo = 'text',
-        marker = {"size": 10},
+        marker = {"size": 15},
         hoverlabel = dict(font = {"color": "white"})
     )
 
@@ -58,7 +58,7 @@ def update_graph(n):
     edges_trace = go.Scatter(
         x = [],
         y = [],
-        line = dict(width=1, color="gray"),
+        line = dict(width = 1.5, color = "gray"),
         hoverinfo = 'none',
         mode = 'lines'
     )
