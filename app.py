@@ -4,6 +4,7 @@ import networkx as nx
 import plotly.graph_objs as go
 import plotly.express as px
 import numpy as np
+from lorem_text import lorem
 from mcmc_driver import *
 from generate_data import get_colorado_graph
 from dash import dcc, html
@@ -41,25 +42,35 @@ populations = []
 for i in G.nodes():
     populations.append(G.nodes()[i]["population"])
 
-dummy_hist = px.histogram(x = populations, nbins = 10, title = "Population")
+dummy_hist = px.histogram(
+    x = populations, 
+    nbins = 10, 
+    title = "Population Distribution of Colorado Counties",
+    template = "ggplot2",
+    labels = dict(x = "Population")
+)
+dummy_hist.update_layout(yaxis_title = "Number of Districts")
 
 # Create a layout with a plotly subplot
 app.layout = html.Div([
     html.H1(PAGE_TITLE),
+    html.P(lorem.words(200)),
     html.Div(
         dcc.Graph(id = 'graph-animation'),
-        style = {"width": "60%", "display": "inline-block"}
+        style = {"width": "65%", "display": "inline-block"}
     ),
     html.Div(
         dcc.Graph(id = "demo-hist", figure = dummy_hist),
-        style = {"width": "30%", "display": "inline-block"}
+        style = {"width": "35%", "display": "inline-block"}
     ),
     dcc.Interval(
         id = 'interval-component',
         interval = ITERATION_INTERVAL_MS,
         n_intervals = 0
     )
-])
+],
+    style = {"margin": "50px"}
+)
 
 # Define callback to update graph colors over time
 @app.callback(
@@ -117,4 +128,3 @@ def update_graph(n):
 # Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)
-
