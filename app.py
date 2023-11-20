@@ -10,7 +10,7 @@ from dash.dependencies import Input, Output
 from plotly.subplots import make_subplots
 
 # Create a Dash app
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, suppress_callback_exceptions = True)
 
 # necessary constants
 PAGE_TITLE = "Working Project Site, CS 333"
@@ -19,7 +19,7 @@ ITERATION_INTERVAL_MS = 1000
 # Create a sample NetworkX graph
 G = get_colorado_graph()
 
-# set initial positions of nodes
+# set initial positions of nodes, which remain static
 pos = nx.spring_layout(G)
 
 # Create a layout with a plotly subplot
@@ -42,29 +42,23 @@ def update_graph(n):
     # Create a subplot with NetworkX graph and update node colors
     fig = make_subplots(rows=1, cols=1)
 
+    # display the graph nodes
     node_trace = go.Scatter(
         x = [pos[node][0] for node in G.nodes()],
         y = [pos[node][1] for node in G.nodes()],
-        text = list(G.nodes()),
+        text = [f"{G.nodes[i]['name']} County<br>Population: {G.nodes[i]['population']}"
+            for i in G.nodes()],
         mode = 'markers',
         hoverinfo = 'text',
-        marker = dict(
-            showscale = True,
-            colorscale = 'YlGnBu',
-            size = 10,
-            colorbar = dict(
-                thickness = 15,
-                title = 'Node Connections',
-                xanchor = 'left',
-                titleside = 'right'
-            )
-        )
+        marker = {"size": 10},
+        hoverlabel = dict(font = {"color": "white"})
     )
 
+    # display the graph edges
     edges_trace = go.Scatter(
         x = [],
         y = [],
-        line = dict(width=0.5, color='#888'),
+        line = dict(width=1, color="gray"),
         hoverinfo = 'none',
         mode = 'lines'
     )
@@ -75,6 +69,7 @@ def update_graph(n):
         edges_trace['x'] += tuple([x0, x1, None])
         edges_trace['y'] += tuple([y0, y1, None])
 
+    # add visualizations to figure
     fig.add_trace(edges_trace)
     fig.add_trace(node_trace)
     fig.update_layout(
@@ -82,7 +77,9 @@ def update_graph(n):
         hovermode = 'closest',
         margin = dict(b = 0, l = 0, r = 0, t = 0),
         xaxis = dict(showgrid = False, zeroline = False, showticklabels = False),
-        yaxis = dict(showgrid = False, zeroline = False, showticklabels = False)
+        yaxis = dict(showgrid = False, zeroline = False, showticklabels = False),
+        plot_bgcolor = "rgba(0,0,0,0)",
+        paper_bgcolor = "rgba(0,0,0,0)"
     )
 
     return fig
