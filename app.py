@@ -4,7 +4,7 @@ import networkx as nx
 import plotly.graph_objs as go
 import numpy as np
 from mcmc_driver import *
-from generate_data import *
+from generate_data import get_colorado_graph
 from dash import dcc, html
 from dash.dependencies import Input, Output
 from plotly.subplots import make_subplots
@@ -15,6 +15,13 @@ app = dash.Dash(__name__, suppress_callback_exceptions = True)
 # necessary constants
 PAGE_TITLE = "Working Project Site, CS 333"
 ITERATION_INTERVAL_MS = 1000
+
+# static functin for format text that appears when hovering over a node
+def format_hover_text(node):
+    name = node["name"]
+    pop = node["population"]
+    output = f"{name} County<br>Population: {pop}"
+    return output
 
 # Create a sample NetworkX graph
 G = get_colorado_graph()
@@ -46,8 +53,7 @@ def update_graph(n):
     node_trace = go.Scatter(
         x = [pos[node][0] for node in G.nodes()],
         y = [pos[node][1] for node in G.nodes()],
-        text = [f"{G.nodes[i]['name']} County<br>Population: {G.nodes[i]['population']}"
-            for i in G.nodes()],
+        text = [format_hover_text(G.nodes()[i]) for i in G.nodes()],
         mode = 'markers',
         hoverinfo = 'text',
         marker = {"size": 15},
