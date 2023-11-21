@@ -38,9 +38,24 @@ G = get_colorado_graph()
 # set initial positions of nodes, which remain static
 pos = nx.spring_layout(G)
 
-populations = []
-for i in G.nodes():
-    populations.append(G.nodes()[i]["population"])
+
+def bar_chart_data():
+    # creates a dictionary to store the population per district created by mcmc
+    district_populations = {}
+    for node in G.nodes():
+        color = G.nodes()[node]["color"]
+        population = G.nodes()[node]["population"]
+        if color in district_populations:
+            district_populations[color] += population
+        else: 
+            district_populations[color] = population
+    #Creates a dataset from the populations dictionary
+    data = {}
+    data['Districts'] = list(district_populations.keys())
+    data['Population'] = list(district_populations.values())
+    dataframe = pd.DataFrame(data)
+    return dataframe
+
 
 dummy_hist = px.histogram(
     x = populations, 
