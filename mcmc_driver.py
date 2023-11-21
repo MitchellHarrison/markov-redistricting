@@ -99,9 +99,7 @@ def create_proposed_state(graph, subgraphs, conflicted_edge):
 
         # Add the node to the other subgraph
         mod_sub = modified_subgraphs[index_other_node]
-        new_color = mod_sub.nodes[list(mod_sub.nodes())[0]]["color"]
         mod_sub.add_node(node_to_move)
-        mod_sub.nodes[node1]["color"] = new_color
         
 
     return modified_graph, modified_subgraphs
@@ -116,6 +114,7 @@ def calculate_total_population(graph) -> int:
 # population score function for calculating transition probabilities
 def populationscore(graph,subgraphs, c_pop = 0.3) -> float:
     totalsum=0
+    total_population=calculate_total_population(colorado_graph)
     districtaverage=total_population/len(subgraphs)
     for i, subgraph in enumerate(subgraphs, start=1):
         # Calculate the sum of populations for each subgraph
@@ -123,52 +122,62 @@ def populationscore(graph,subgraphs, c_pop = 0.3) -> float:
         totalsum+=(population_sum-districtaverage)**2
     return(c_pop*totalsum)
 
+def PVIscore(graph, subgraphs, c_pvi=0.00003):
+    total_score = 0
+
+    for subgraph in subgraphs:
+        # Calculate the sum of PVI scores for each subgraph
+        pvi_sum = sum(graph.nodes[node]['PVI']*graph.nodes[node]['population'] for node in subgraph.nodes)
+        total_score += abs(pvi_sum)
+
+    return c_pvi * total_score
+
 
 # MCMC score function
 def totalscorefunction(graph,subgraph, lambda_J = 1) -> float:
     pop_score = populationscore(graph, subgraph)
     pvi_score = PVIscore(graph, subgraph)
-    score = (lambdaJ * pop_score) + ((1 - lambda_J) * pvi_score)
+    score = (lambda_J * pop_score) + ((1 - lambda_J) * pvi_score)
     return score
 
 
 # perform a single iteration of MCMC sampling
-def one_iteration_of_MCMC(graph,subgraphs, beta = 0.002):
-    border_edges = get_edges_between_subgraphs(graph,subgraphs)
-    con1 = len(border_edges)
-    conflicted_edge = get_random_edge_between_subgraphs(graph, subgraphs)
+# def one_iteration_of_MCMC(graph,subgraphs, beta = 0.002):
+#     border_edges = get_edges_between_subgraphs(graph,subgraphs)
+#     con1 = len(border_edges)
+#     conflicted_edge = get_random_edge_between_subgraphs(graph, subgraphs)
 
-    proposed_graph, proposed_subgraphs = create_proposed_state(
-            test_graph, testsubgraphs, conflicted_edge)
+#     proposed_graph, proposed_subgraphs = create_proposed_state(
+#             test_graph, testsubgraphs, conflicted_edge)
 
 
-    new_border_edges = get_edges_between_subgraphs(proposed_graph,
-                                                   proposed_subgraphs)
-    con2 = len(new_border_edges)
+#     new_border_edges = get_edges_between_subgraphs(proposed_graph,
+#                                                    proposed_subgraphs)
+#     con2 = len(new_border_edges)
 
-    new_score = totalscorefunction(proposed_graph, proposed_subgraphs)
-    old_score = totalscorefunction(graph, subgraphs)
-    probfromscorefunctions = np.exp(-1*beta*(new_score - old_score)) 
+#     new_score = totalscorefunction(proposed_graph, proposed_subgraphs)
+#     old_score = totalscorefunction(graph, subgraphs)
+#     probfromscorefunctions = np.exp(-1*beta*(new_score - old_score)) 
 
-    transitionprobability = min(1, con1/con2, float(probfromscorefunctions))
+#     transitionprobability = min(1, con1/con2, float(probfromscorefunctions))
 
-    # optional: print transition probability at each iteration
-    # print(transitionprobability)
+#     # optional: print transition probability at each iteration
+#     # print(transitionprobability)
 
-    # Generate a random number between 0 and 1
-    random_number = np.random.rand()
+#     # Generate a random number between 0 and 1
+#     random_number = np.random.rand()
 
-    # Check if the random number is less than the transition probability
-    if random_number < transitionprobability:
-        return proposed_graph, proposed_subgraphs
-    else:
-        return graph, subgraphs
+#     # Check if the random number is less than the transition probability
+#     if random_number < transitionprobability:
+#         return proposed_graph, proposed_subgraphs
+#     else:
+#         return graph, subgraphs
 
 
 # perform full redistricting MCMC algorithm by iterating num_iterations times
-def Redistricting_MCMC(graph, subgraphs, num_iterations):
-    # Perform MCMC iterations
-    for _ in range(num_iterations):
-        # Call one_iteration_of_MCMC for each iteration
-        graph, subgraphs = one_iteration_of_MCMC(graph, subgraphs)
-    return graph, subgraphs
+# def Redistricting_MCMC(graph, subgraphs, num_iterations):
+#     # Perform MCMC iterations
+#     for _ in range(num_iterations):
+#         # Call one_iteration_of_MCMC for each iteration
+#         graph, subgraphs = one_iteration_of_MCMC(graph, subgraphs)
+#     return graph, subgraphs
