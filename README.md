@@ -66,14 +66,33 @@ When the data was collected, the page was last revised on December 16, 2021.
 Python file used to clean county_adjacency.txt into county.csv. Ran on Python 3.11.2 and requires the `re` and `csv` libraries to run.
 
 
-### ColoradoGraph.ipynb
+### EthnicityScraper.py
 
-Jupyter notebook that demonstrates how to extract node and edge information from county.csv to be used for NetworkX graphs.
+Finds the white percentage of a county's population for each county in Colorado.
+Source: https://demography.dola.colorado.gov/assets/html/population.html
+
+
+### PartisanLeanScraper.py
+
+Finds the partisan lean (PVI) of each county in Colorado.
+Source: https://www.zipdatamaps.com/counties/state/politics/map-of-partisan-voting-index-for-counties-in-colorado
+
+
+
+### PopulationScraper.py
+
+Finds the population of every county in Colorado.
+Source: https://gis.dola.colorado.gov/population/population-totals-counties/
 
 
 ## archive/ folder
 
 Contains Jupyter notebooks used to experiment with code prior to creating the technical demo notebook.
+
+
+### ColoradoGraph.ipynb
+
+Jupyter notebook that demonstrates how to extract node and edge information from county.csv to be used for NetworkX graphs.
 
 
 ## demo_plots folder
