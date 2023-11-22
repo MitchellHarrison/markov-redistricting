@@ -9,11 +9,6 @@ A CS333 Project for MCMC-algorithmic redistricting for fairer congressional maps
 This notebook is the main technical demo for this project. It is a Jupyter notebook that imports Colorado data, represents its counties as an undirected graph, and iterates through the MCMC algorithm to produce a new congressional map of Colorado designed to generated roughly-equally-populated congressional districts that are politically competitive.
 
 
-### generate_data.py
-
-This Python file contains helper functions that reads from county.csv and data_by_county.csv to return an undirected graph representing Colorado. Each node has attributes for name, population, and PVI. Edges are added based on contiguity of counties.
-
-
 ### county.csv
 
 Cleaned CSV file that takes in all \[County, Neighbor\] pairs in county_adjacency.txt, such that both counties are in Colorado (CO). If there exists a pair of counties \[a, b\] in the CSV, the pair \[b, a\] will also exist in the CSV.
@@ -65,3 +60,17 @@ Python file used to clean county_adjacency.txt into county.csv. Ran on Python 3.
 
 Jupyter notebook that demonstrates how to extract node and edge information from county.csv to be used for NetworkX graphs.
 
+
+## archive/ folder
+
+Contains Jupyter notebooks used to experiment with code prior to creating the technical demo notebook.
+
+
+## demo_plots folder
+
+Contains plots of MCMC algorithm scores over iterations for evaluation purposes.
+
+
+## frames/ folder
+
+Folder used to store images over iterations of the MCMC algorithm for video creation.
