@@ -7,7 +7,10 @@ import copy
 import plotly.graph_objects as go
 from IPython.display import display, HTML
 from generate_data import *
+
+# set a random seed
 seed_value=46
+random.seed(seed_value)
 
 # generate colorado graph
 graph = get_colorado_graph()
