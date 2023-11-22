@@ -164,5 +164,5 @@ def find_colorado_counties(input_path: str, output_path: str):
 # main method that calls the web scraper function
 if __name__ == "__main__":
     input_path = "scrape/contiguity/county_adjacency.txt"
-    output_path = "scrape/county.csv"
+    output_path = "county.csv"
     find_colorado_counties(input_path, output_path)
