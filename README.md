@@ -4,9 +4,14 @@ A CS333 Project for MCMC-algorithmic redistricting for fairer congressional maps
 
 ## The Model
 
-### CS 333 MCMC on Colorado.ipynb
+### TechnicalDemo.ipynb
 
 This notebook is the main technical demo for this project. It is a Jupyter notebook that imports Colorado data, represents its counties as an undirected graph, and iterates through the MCMC algorithm to produce a new congressional map of Colorado designed to generated roughly-equally-populated congressional districts that are politically competitive.
+
+
+### mcmc_driver.py
+
+This Python files contains various helper files for the MCMC algorithm used in TechnicalDemo.ipynb. It should be included in the same folder as TechnicalDemo.ipynb to not cause any ModuleNotFound errors.
 
 
 ### county.csv
@@ -29,6 +34,11 @@ Data Dictionary:
 - Population: County population based on 2022 estimates
 - #Democrats: Number of Democrats in the county as of 2023 estimates
 - #Republicans: Number of Republicans in the county as of 2023 estimates
+
+
+### generate_data.py
+
+This Python file contains helper functions that reads from county.csv and data_by_county.csv to return an undirected graph representing Colorado. Each node has attributes for name, population, and PVI. Edges are added based on contiguity of counties.
 
 
 ## scrape/ folder
