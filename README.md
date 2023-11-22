@@ -34,6 +34,7 @@ Data Dictionary:
 - Population: County population based on 2022 estimates
 - #Democrats: Number of Democrats in the county as of 2023 estimates
 - #Republicans: Number of Republicans in the county as of 2023 estimates
+- White: Percentage of white Coloradans in the county as of 2023 estimates
 
 
 ### generate_data.py
