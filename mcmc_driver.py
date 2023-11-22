@@ -66,6 +66,9 @@ def get_edges_between_subgraphs(graph, subgraphs) -> list:
 
 # randomly select an edge connecting two subgraphs
 def get_random_edge_between_subgraphs(graph, subgraphs) -> tuple:
+    seed_value=46
+    random.seed(seed_value)
+
     edges_between_subgraphs = get_edges_between_subgraphs(graph, subgraphs)
     if edges_between_subgraphs:
         return random.choice(edges_between_subgraphs)
@@ -75,6 +78,11 @@ def get_random_edge_between_subgraphs(graph, subgraphs) -> tuple:
 
 # create a proposed map, creating updated subgraphs and border edges
 def create_proposed_state(graph, subgraphs, conflicted_edge):
+    
+    # set a seed
+    seed_value=46
+    random.seed(seed_value)
+    
     # Create deep copies of the graph and subgraphs
     modified_graph = copy.deepcopy(graph)
     modified_subgraphs = [subgraph.copy() for subgraph in subgraphs]
