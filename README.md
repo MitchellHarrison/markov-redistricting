@@ -96,7 +96,7 @@ Contains Jupyter notebooks used to experiment with code prior to creating the te
 Jupyter notebook that demonstrates how to extract node and edge information from county.csv to be used for NetworkX graphs.
 
 
-## demo_plots folder
+## demo_plots/ folder
 
 Contains plots of MCMC algorithm scores over iterations for evaluation purposes.
 
